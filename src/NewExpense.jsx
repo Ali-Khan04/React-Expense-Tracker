@@ -4,7 +4,7 @@ import { FormContext } from "./Context";
 import "./CSS/NewExpense.css";
 
 export default function NewExpense() {
-  const { handleForm } = useContext(FormContext);
+  const { handleExpenses } = useContext(FormContext);
 
   const [userInput, setUserInput] = useState({
     title: "",
@@ -21,15 +21,19 @@ export default function NewExpense() {
       };
     });
   }
-
   function handleSubmitButton(e) {
     e.preventDefault();
-    handleForm(userInput);
-    setUserInput({
-      title: "",
-      amount: "",
-      date: "",
-    });
+
+    const newExpense = {
+      id: Math.random().toString(),
+      title: userInput.title,
+      amount: +userInput.amount,
+      date: new Date(userInput.date),
+    };
+
+    handleExpenses(newExpense);
+
+    setUserInput({ title: "", amount: "", date: "" });
   }
 
   return (
